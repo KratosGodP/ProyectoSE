@@ -1,5 +1,5 @@
 
-package BEXPRESS;
+package BEXPRESS.model;
 
 public class Producto {
      private int id;
@@ -66,7 +66,17 @@ public class Producto {
         this.activo = activo;
     }
 
+    @Override
+    public String toString() {
+        return nombre + " (" + categoria + ") - S/ " + precio + " [" + stock + "]";
+    }
     
+    public boolean esValido() {
+        return nombre != null && !nombre.isBlank()
+            && categoria != null && !categoria.isBlank()
+            && precio >= 0 && stock >= 0;
+    }
+
     
 }
 
