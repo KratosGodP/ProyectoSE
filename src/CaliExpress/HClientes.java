@@ -1,29 +1,43 @@
 package CaliExpress;
 
-import BEXPRESS.model.Producto;
-import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-public class HistorialPo extends javax.swing.JPanel {
+public class HClientes extends javax.swing.JPanel {
+    
+    public static javax.swing.table.DefaultTableModel modelo;
+private javax.swing.table.TableRowSorter<javax.swing.table.TableModel> sorter;
 
-    public HistorialPo() {
+
+    public HClientes() {
         initComponents();
-        recargarTabla();
-    }
-
-    private void recargarTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) jTableP.getModel(); // <-- usa el nombre real de tu JTable
-        modelo.setRowCount(0); // limpia
-
-        for (Producto p : General.servicioProducto.listar()) {
-            modelo.addRow(new Object[]{
-                p.getId(), p.getNombre(), p.getPrecio(), p.getStock(), p.getCategoria(), p.getFecha()});
-
+       if (modelo == null) {
+            modelo = new DefaultTableModel(
+                new Object[]{"Id","Nombre","Email","Dni","Telefono","Direccion","Fecha"}, 0
+            );
         }
+
+        jTableC.setModel(modelo);
+
+        sorter = new TableRowSorter<>(modelo);
+        jTableC.setRowSorter(sorter);
+    
+      
+    }
+    public static boolean existeDniEnTabla(String dni) {
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        String dniTabla = (String) modelo.getValueAt(i, 3); // Columna 3 = DNI en tu tabla
+        if (dniTabla.equals(dni)) return true;
+    }
+    return false;
+}
+
+
+
        
 
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -34,7 +48,7 @@ public class HistorialPo extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableP = new javax.swing.JTable();
+        jTableC = new javax.swing.JTable();
         bntEditar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -48,27 +62,28 @@ public class HistorialPo extends javax.swing.JPanel {
         bg.setPreferredSize(new java.awt.Dimension(750, 430));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Productos");
+        jLabel1.setText("Clientes");
 
-        jTableP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableP.setModel(new javax.swing.table.DefaultTableModel(
+        jTableC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Precio", "Cantidad", "Categoria", "Fecha"
+                "Id", "Nombre", "Email", "Dni", "telefono", "Direccion", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -79,7 +94,7 @@ public class HistorialPo extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableP);
+        jScrollPane1.setViewportView(jTableC);
 
         bntEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bntEditar.setText("Editar");
@@ -103,6 +118,12 @@ public class HistorialPo extends javax.swing.JPanel {
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
             }
         });
 
@@ -185,91 +206,53 @@ public class HistorialPo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        Dashboard.todoPanel(new Product()); 
+        Dashboard.todoPanel(new RegistrarCliente());
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void bntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarActionPerformed
 
-        int fila = jTableP.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un producto", "Info", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        int id = (int) ((javax.swing.table.DefaultTableModel) jTableP.getModel()).getValueAt(fila, 0);
-        Dashboard.todoPanel(new Product(id)); // abre tu formulario en modo edición
+        int filaVista = jTableC.getSelectedRow();
+    if (filaVista == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+        return;
+    }
+    int fila = jTableC.convertRowIndexToModel(filaVista);
 
+    int id           = (int)    modelo.getValueAt(fila, 0);
+    String nombre    = (String) modelo.getValueAt(fila, 1);
+    String email     = (String) modelo.getValueAt(fila, 2);
+    String dni       = (String) modelo.getValueAt(fila, 3);
+    String telefono  = (String) modelo.getValueAt(fila, 4);
+    String direccion = (String) modelo.getValueAt(fila, 5);
+
+    Dashboard.todoPanel(new RegistrarCliente(fila, id, dni, nombre, email, telefono, direccion));
     }//GEN-LAST:event_bntEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int fila = jTableP.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un producto", "Info", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        int id = (int) ((javax.swing.table.DefaultTableModel) jTableP.getModel()).getValueAt(fila, 0);
-
-        int opt = JOptionPane.showConfirmDialog(this, "¿Eliminar el producto " + id + "?", "Confirmar",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (opt == JOptionPane.YES_OPTION) {
-            if (CaliExpress.General.servicioProducto.eliminar(id)) {
-                recargarTabla(); // <- vuelve a cargar la tabla
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo eliminar", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        int filaVista = jTableC.getSelectedRow();
+    if (filaVista == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+        return;
+    }
+    int fila = jTableC.convertRowIndexToModel(filaVista);
+    modelo.removeRow(fila);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-          String criterio = btnBuscar.getText().trim();
-
-    if (criterio.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese un ID o nombre para buscar.");
-        return;
-    }
-
-    DefaultTableModel modelo = (DefaultTableModel) jTableP.getModel();
-    modelo.setRowCount(0); // limpiar la tabla antes de mostrar resultados
-
-    try {
-        // 🔍 primero intentamos buscar por ID
-        int id = Integer.parseInt(criterio);
-        Producto encontrado = General.servicioProducto.buscarPorId(id);
-        if (encontrado != null) {
-            modelo.addRow(new Object[]{
-                encontrado.getId(),
-                encontrado.getNombre(),
-                encontrado.getPrecio(),
-                encontrado.getStock(),
-                encontrado.getCategoria(),
-                encontrado.getFecha()
-            });
-            return;
-        }
-    } catch (NumberFormatException e) {
-        // no es número → seguimos buscando por nombre
-    }
-
-    // 🔍 buscar por nombre
-    List<Producto> encontrados = General.servicioProducto.buscarPorNombre(criterio);
-
-    if (encontrados.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No se encontraron productos con ese criterio.");
+         String q = btnBuscar.getText().trim();
+    if (q.isBlank()) {
+        sorter.setRowFilter(null);
     } else {
-        for (Producto p : encontrados) {
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getNombre(),
-                p.getPrecio(),
-                p.getStock(),
-                p.getCategoria(),
-                p.getFecha()
-            });
-        }
+        sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + q)); // filtra en todas las columnas
     }
 
 
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -282,7 +265,7 @@ public class HistorialPo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableP;
+    private javax.swing.JTable jTableC;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

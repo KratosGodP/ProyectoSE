@@ -1,27 +1,30 @@
 package CaliExpress;
 
-import BEXPRESS.model.Producto;
-import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
-public class HistorialPo extends javax.swing.JPanel {
+public class HUsuarios extends javax.swing.JPanel {
 
-    public HistorialPo() {
+    public static DefaultTableModel modelo;
+
+    private TableRowSorter<TableModel> sorter;
+
+    public HUsuarios() {
         initComponents();
-        recargarTabla();
+       if (modelo == null) {
+        modelo = new DefaultTableModel(
+            new Object[]{"Id", "Nombre", "Email", "Rol", "Telefono", "Fecha"}, 0
+        );
     }
 
-    private void recargarTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) jTableP.getModel(); // <-- usa el nombre real de tu JTable
-        modelo.setRowCount(0); // limpia
+    jTableU.setModel(modelo);
 
-        for (Producto p : General.servicioProducto.listar()) {
-            modelo.addRow(new Object[]{
-                p.getId(), p.getNombre(), p.getPrecio(), p.getStock(), p.getCategoria(), p.getFecha()});
+    sorter = new TableRowSorter<>(modelo);
+    jTableU.setRowSorter(sorter);
 
-        }
-       
 
     }
 
@@ -33,13 +36,13 @@ public class HistorialPo extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableP = new javax.swing.JTable();
         bntEditar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableU = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(750, 430));
 
@@ -48,38 +51,7 @@ public class HistorialPo extends javax.swing.JPanel {
         bg.setPreferredSize(new java.awt.Dimension(750, 430));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Productos");
-
-        jTableP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTableP.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Id", "Nombre", "Precio", "Cantidad", "Categoria", "Fecha"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTableP);
+        jLabel1.setText("Usuarios");
 
         bntEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bntEditar.setText("Editar");
@@ -114,14 +86,45 @@ public class HistorialPo extends javax.swing.JPanel {
             }
         });
 
+        jTableU.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableU.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Id", "Nombre", "Email", "Rol", "Telefono", "Fecha"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableU);
+
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(289, 289, 289)
                 .addComponent(jLabel2))
@@ -162,9 +165,9 @@ public class HistorialPo extends javax.swing.JPanel {
                             .addGroup(bgLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)))
+                .addGap(12, 12, 12)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntEditar)
                     .addComponent(btnNuevo)
@@ -185,89 +188,46 @@ public class HistorialPo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        Dashboard.todoPanel(new Product()); 
+        Dashboard.todoPanel(new RegistarUsuario());
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void bntEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarActionPerformed
-
-        int fila = jTableP.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un producto", "Info", JOptionPane.INFORMATION_MESSAGE);
+        int fila = jTableU.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario");
             return;
         }
-        int id = (int) ((javax.swing.table.DefaultTableModel) jTableP.getModel()).getValueAt(fila, 0);
-        Dashboard.todoPanel(new Product(id)); // abre tu formulario en modo edición
+
+        int filaModelo = jTableU.convertRowIndexToModel(fila);
+
+        int id = (int) HUsuarios.modelo.getValueAt(filaModelo, 0);   // 👈 aquí cast
+        String nombre = (String) HUsuarios.modelo.getValueAt(filaModelo, 1);
+        String correo = (String) HUsuarios.modelo.getValueAt(filaModelo, 2);
+        String rol = (String) HUsuarios.modelo.getValueAt(filaModelo, 3);
+        String telefono = (String) HUsuarios.modelo.getValueAt(filaModelo, 4);
+
+        Dashboard.todoPanel(new RegistarUsuario(filaModelo, id, nombre, correo, rol, telefono));
+
 
     }//GEN-LAST:event_bntEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int fila = jTableP.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione un producto", "Info", JOptionPane.INFORMATION_MESSAGE);
+        int fila = jTableU.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario");
             return;
         }
-        int id = (int) ((javax.swing.table.DefaultTableModel) jTableP.getModel()).getValueAt(fila, 0);
+        modelo.removeRow(fila);
 
-        int opt = JOptionPane.showConfirmDialog(this, "¿Eliminar el producto " + id + "?", "Confirmar",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (opt == JOptionPane.YES_OPTION) {
-            if (CaliExpress.General.servicioProducto.eliminar(id)) {
-                recargarTabla(); // <- vuelve a cargar la tabla
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo eliminar", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-          String criterio = btnBuscar.getText().trim();
-
-    if (criterio.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese un ID o nombre para buscar.");
-        return;
-    }
-
-    DefaultTableModel modelo = (DefaultTableModel) jTableP.getModel();
-    modelo.setRowCount(0); // limpiar la tabla antes de mostrar resultados
-
-    try {
-        // 🔍 primero intentamos buscar por ID
-        int id = Integer.parseInt(criterio);
-        Producto encontrado = General.servicioProducto.buscarPorId(id);
-        if (encontrado != null) {
-            modelo.addRow(new Object[]{
-                encontrado.getId(),
-                encontrado.getNombre(),
-                encontrado.getPrecio(),
-                encontrado.getStock(),
-                encontrado.getCategoria(),
-                encontrado.getFecha()
-            });
-            return;
+    String q = btnBuscar.getText().trim();
+        if (q.isBlank()) {
+            sorter.setRowFilter(null); // quita filtro
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + q)); // busca en todas las columnas
         }
-    } catch (NumberFormatException e) {
-        // no es número → seguimos buscando por nombre
-    }
-
-    // 🔍 buscar por nombre
-    List<Producto> encontrados = General.servicioProducto.buscarPorNombre(criterio);
-
-    if (encontrados.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No se encontraron productos con ese criterio.");
-    } else {
-        for (Producto p : encontrados) {
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getNombre(),
-                p.getPrecio(),
-                p.getStock(),
-                p.getCategoria(),
-                p.getFecha()
-            });
-        }
-    }
-
-
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -281,8 +241,8 @@ public class HistorialPo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableP;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableU;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

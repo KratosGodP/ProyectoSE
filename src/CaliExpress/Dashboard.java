@@ -14,6 +14,7 @@ public class Dashboard extends javax.swing.JFrame {
         Principal pl = new Principal();
         todoPanel(pl);
 
+        
     }
 
     private void SetDate() {
@@ -42,7 +43,6 @@ public class Dashboard extends javax.swing.JFrame {
         btnPrincipal = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         btnPedido = new javax.swing.JButton();
-        btnEntregas = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
         Vit = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -94,18 +94,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        btnEntregas.setBackground(new java.awt.Color(0, 51, 255));
-        btnEntregas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnEntregas.setText("Entregas");
-        btnEntregas.setBorder(null);
-        btnEntregas.setBorderPainted(false);
-        btnEntregas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEntregas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntregasActionPerformed(evt);
-            }
-        });
-
         btnUsuarios.setBackground(new java.awt.Color(0, 51, 255));
         btnUsuarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnUsuarios.setText("Usuarios");
@@ -124,7 +112,6 @@ public class Dashboard extends javax.swing.JFrame {
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
             .addComponent(btnPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnEntregas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -139,8 +126,6 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(btnEntregas, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -165,22 +150,21 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(VitLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(328, Short.MAX_VALUE))
+                        .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)))
+                .addGap(328, 328, 328))
         );
         VitLayout.setVerticalGroup(
             VitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(VitLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(dateText, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
 
         content.setBackground(new java.awt.Color(255, 255, 255));
         content.setMinimumSize(new java.awt.Dimension(750, 430));
-        content.setPreferredSize(new java.awt.Dimension(750, 430));
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
         content.setLayout(contentLayout);
@@ -204,7 +188,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Vit, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
-                    .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
+                    .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGap(182, 182, 182)
                         .addComponent(jLabel2)
@@ -221,7 +205,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(Vit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGap(149, 149, 149)
-                        .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -253,11 +237,6 @@ public class Dashboard extends javax.swing.JFrame {
         HistorialPo hp = new HistorialPo();
         todoPanel(hp);
     }//GEN-LAST:event_btnProductosActionPerformed
-
-    private void btnEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregasActionPerformed
-        Entrega et = new Entrega();
-        todoPanel(et);
-    }//GEN-LAST:event_btnEntregasActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         Usuarios us = new Usuarios();
@@ -303,7 +282,6 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Vit;
     private javax.swing.JPanel background;
-    private javax.swing.JButton btnEntregas;
     private javax.swing.JButton btnPedido;
     private javax.swing.JButton btnPrincipal;
     private javax.swing.JButton btnProductos;

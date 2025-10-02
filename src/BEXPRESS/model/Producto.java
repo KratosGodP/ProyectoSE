@@ -1,15 +1,16 @@
-
 package BEXPRESS.model;
 
 public class Producto {
-     private int id;
+
+    private int id;
     private String nombre;
     private double precio;
-    private int stock;         
-    private String categoria;     
+    private int stock;
+    private String categoria;
     private boolean activo = true;
+    private String fecha; // yyyy-MM-dd
 
-    public Producto(int id, String nombre, double precio, int cantidad, String categoria) {
+    public Producto(int id, String nombre, double precio, int stock, String categoria) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
@@ -49,7 +50,6 @@ public class Producto {
         this.stock = stock;
     }
 
-
     public String getCategoria() {
         return categoria;
     }
@@ -66,18 +66,23 @@ public class Producto {
         this.activo = activo;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
     @Override
     public String toString() {
         return nombre + " (" + categoria + ") - S/ " + precio + " [" + stock + "]";
     }
-    
+
     public boolean esValido() {
         return nombre != null && !nombre.isBlank()
-            && categoria != null && !categoria.isBlank()
-            && precio >= 0 && stock >= 0;
+                && categoria != null && !categoria.isBlank()
+                && precio >= 0 && stock >= 0;
     }
 
-    
 }
-
-
